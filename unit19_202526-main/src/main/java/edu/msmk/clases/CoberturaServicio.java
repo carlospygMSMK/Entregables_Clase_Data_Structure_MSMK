@@ -4,46 +4,37 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
-/// // Planteamos las zonas que podemos dar covertura según la siguiente estructura:
-/// // Provincia -> Municipio -> Unidad poblacional -> Vía
 public class CoberturaServicio {
-    /// // Estructura: Map<Provincia, Map<Municipio, Map<U.P., HashSet<Vía>>>>
+    /// Estructura: Map<Provincia, Map<Municipio, Map<U.P., HashSet<Vía>>>>
     private final Map<Integer, Map<Integer, Map<Integer, HashSet<Integer>>>> cobertura;
 
-    /// // OPERACIONES COBERTURA SERVICIO
     public CoberturaServicio() {
         this.cobertura = new HashMap<>();
     }
 
-    ///  // Añadimos un tramo a la estructura jerárquica
     public void addTramo(Integer provincia, Integer municipio, Integer unidadPoblacional, Integer via) {
 
-        /// // 1. Obtener o crear el mapa de Municipios (y el resto de la jerarquía)
+        /// 1. Obtener o crear el mapa de Municipios (y el resto de la jerarquía)
         Map<Integer, Map<Integer, HashSet<Integer>>> municipiosYResto =
                 this.cobertura.computeIfAbsent(provincia, k -> new HashMap<>());
-
-        /// // 2. Obtener o crear el mapa de Unidades Poblacionales (y el resto)
+        /// 2. Obtener o crear el mapa de Unidades Poblacionales (y el resto)
         Map<Integer, HashSet<Integer>> unidades =
                 municipiosYResto.computeIfAbsent(municipio, k -> new HashMap<>());
-
-        /// // 3. Obtener o crear el conjunto de Vías
+        /// 3. Obtener o crear el conjunto de Vías
         HashSet<Integer> vias =
                 unidades.computeIfAbsent(unidadPoblacional, k -> new HashSet<>());
-
-        /// // 4. Agregar la Vía al conjunto
+        /// 4. Agregar la Vía al conjunto
         vias.add(via);
     }
 
-    /// // Añadimos una funcionalidad de N.º Provincias Cubiertas
+    ///Un añadido una funcionalidad de N.º Provincias Cubiertas
     public int numeroProvinciasCubiertas(){
         return this.cobertura.size();
     }
 
+    /// Validación jerárquica: Debe existir en todos los niveles
     public boolean damosServicio(PeticionCliente direccion){
-        /// // Validación jerárquica: Debe existir en todos los niveles
-
         /// // 1. Comprobar Provincia
-        // Renombrado para mayor claridad (contiene Municipios Y el resto de la estructura)
         Map<Integer, Map<Integer, HashSet<Integer>>> municipiosYResto =
                 cobertura.get(direccion.getProvincia());
         if (municipiosYResto == null) return false;

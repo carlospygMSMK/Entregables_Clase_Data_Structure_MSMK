@@ -18,15 +18,12 @@ public class PeticionCliente {
     public int getProvincia() {
         return provincia;
     }
-
     public int getMunicipio() {
         return municipio;
     }
-
     public int getUnidadPoblacional() {
         return unidadPoblacional;
     }
-
     public int getVia() {
         return via;
     }

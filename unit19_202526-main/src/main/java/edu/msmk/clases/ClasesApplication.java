@@ -15,11 +15,9 @@ import java.sql.Timestamp;
 public class ClasesApplication implements CommandLineRunner {
 
     private final TramoService tramoService;
-
     public ClasesApplication(TramoService tramoService) {
         this.tramoService = tramoService;
     }
-
     public static void main(String[] args) {
         SpringApplication.run(ClasesApplication.class, args);
     }
@@ -58,15 +56,13 @@ public class ClasesApplication implements CommandLineRunner {
         log.info("----------------------------------------------------------------------------------------");
         log.info("Provincias cubiertas cargadas: {}", miCobertura.numeroProvinciasCubiertas());
 
-        // NOTA: Estos códigos (1001000, 38010) DEBEN COINCIDIR con algún tramo cargado en TRAM.
-
         // Petición 1 -> TRUE
-        PeticionCliente peticion1 = new PeticionCliente(10, 16, 1001000, 38010);
+        PeticionCliente peticion1 = new PeticionCliente(10, 116, 1001000, 38010123);
         log.info("--- Petición 1 (Esperando: TRUE) ---");
         cronometrarDireccion(miCobertura, peticion1);
 
         // Petición Falsa: -> FALSE
-        PeticionCliente peticionFalse = new PeticionCliente(10, 16, 1001000, 99999);
+        PeticionCliente peticionFalse = new PeticionCliente(10, 116, 1001000, 99999999);
         log.info("--- Petición Control (Esperado: FALSE) ---");
         cronometrarDireccion(miCobertura, peticionFalse);
         log.info("----------------------------------------------------------------------------------------");

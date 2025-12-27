@@ -14,38 +14,36 @@ import java.nio.charset.StandardCharsets;
 @Slf4j
 public class TramoService {
 
-    /// Leemos los tramos que damos covertura
     public CoberturaServicio leerTramos() throws IOException {
-        CoberturaServicio miCobertura = new CoberturaServicio();
-        ClassPathResource resource = new ClassPathResource("TRAM.D250101.A250630");
 
-        // Si no existiera el archivo
+        CoberturaServicio miCobertura = new CoberturaServicio();                    ///Llamamos Cobertura Servicio
+        ClassPathResource resource = new ClassPathResource("TRAM.D250101.A250630"); ///Nueva Clase "Lector Archivo"
+        /// Si no existiera el archivo
         if (!resource.exists()) {
             throw new IOException("El archivo TRAM.D250101.A250630 no existe en los recursos");
         }
 
-        boolean isEmpty = true; // Se inicializa fuera del bloque de lectura
-
+        boolean isEmpty = true; ///Verificamos Líneas Vacías Fuera del bloque de lectura
+        /// Leemos el archivo
         try (BufferedReader reader = new BufferedReader(
                 new InputStreamReader(resource.getInputStream(), StandardCharsets.ISO_8859_1))) {
 
-            String linea;
-
+            String linea; ///Creamos una variable para trocear las líneas del archivo
             while ((linea = reader.readLine()) != null) {
-                // Validación estricta para asegurar que la línea tiene datos completos
+                /// Validación estricta para asegurar que la línea tiene datos completos
                 if (linea.length() < 20 || linea.trim().isEmpty()) {
-                    continue; // Pasa a la siguiente línea si es muy corta o está vacía
+                    continue; /// Pasa a la siguiente línea si es muy corta o si la línea sin espacios está vacía
                 }
 
                 isEmpty = false; // Si llegamos aquí, el archivo no está vacío
 
                 /// TROCEAR UNA LINEA POR POSICIÓN Y LONGITUD FIJA
-                String provincia = linea.substring(0, 2).trim();  /// Longitud 2 Provincia
-                String municipio = linea.substring(2, 5).trim();  /// Longitud 3 Municipio
-                String unidadPoblacional = linea.substring(5, 12).trim();  ///Longitud 7 Unidad Poblacional
-                String via = linea.substring(12, 20).trim();  ///Longitud 8 Vía
+                String provincia = linea.substring(0, 2).trim();            /// Longitud 2 Provincia
+                String municipio = linea.substring(2, 5).trim();            /// Longitud 3 Municipio
+                String unidadPoblacional = linea.substring(5, 12).trim();   ///Longitud 7 Unidad Poblacional
+                String via = linea.substring(12, 20).trim();                ///Longitud 8 Vía
 
-                // Evitar errores de parseo si los campos están vacíos
+                /// Evitar errores de parseo si los campos están vacíos
                 if (provincia.isEmpty() || municipio.isEmpty() || unidadPoblacional.isEmpty() || via.isEmpty()) {
                     log.warn("Línea omitida por campos vacíos: {}", linea);
                     continue;
@@ -64,12 +62,11 @@ public class TramoService {
                     /// Continúa con la siguiente línea
                 }
             }
-        } // Cierre del try-with-resources
+        }
 
         if (isEmpty) {
             throw new IOException("El archivo está vacío o no contiene líneas válidas.");
         }
-
         return miCobertura;
     }
 }
