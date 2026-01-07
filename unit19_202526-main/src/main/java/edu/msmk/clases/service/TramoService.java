@@ -1,6 +1,7 @@
 package edu.msmk.clases.service;
 
 import edu.msmk.clases.CoberturaServicio;
+import edu.msmk.clases.grafo.GestorRutas;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
@@ -14,16 +15,26 @@ import java.nio.charset.StandardCharsets;
 @Slf4j
 public class TramoService {
 
+    private final GestorRutas gestorRutas; // Inyectamos el gestor
+
+    public TramoService(GestorRutas gestorRutas) {
+        this.gestorRutas = gestorRutas;
+    }
+
     public CoberturaServicio leerTramos() throws IOException {
 
         CoberturaServicio miCobertura = new CoberturaServicio();                    ///Llamamos Cobertura Servicio
         ClassPathResource resource = new ClassPathResource("TRAM.D250101.A250630"); ///Nueva Clase "Lector Archivo"
+
         /// Si no existiera el archivo
         if (!resource.exists()) {
             throw new IOException("El archivo TRAM.D250101.A250630 no existe en los recursos");
         }
 
         boolean isEmpty = true; ///Verificamos Líneas Vacías Fuera del bloque de lectura
+
+        String ultimaViaProcesada = null; ///Para conectar calles entre sí
+
         /// Leemos el archivo
         try (BufferedReader reader = new BufferedReader(
                 new InputStreamReader(resource.getInputStream(), StandardCharsets.ISO_8859_1))) {
@@ -57,6 +68,13 @@ public class TramoService {
                             Integer.parseInt(unidadPoblacional),
                             Integer.parseInt(via)
                     );
+
+                    /// Crear la conexión en el grafo (solo si estamos en el mismo municipio)
+                    if (ultimaViaProcesada != null) {
+                        gestorRutas.conectarVias(ultimaViaProcesada, via, 1.0);
+                    }
+                    ultimaViaProcesada = via;
+
                 } catch (NumberFormatException e) {
                     log.error("Error al parsear un código de dirección: {}. Error: {}", linea, e.getMessage());
                     /// Continúa con la siguiente línea
