@@ -32,7 +32,6 @@ public class TramoService {
         }
 
         boolean isEmpty = true; ///Verificamos Líneas Vacías Fuera del bloque de lectura
-
         String ultimaViaProcesada = null; ///Para conectar calles entre sí
 
         /// Leemos el archivo
@@ -68,8 +67,6 @@ public class TramoService {
                             Integer.parseInt(unidadPoblacional),
                             Integer.parseInt(via)
                     );
-
-                    /// Crear la conexión en el grafo (solo si estamos en el mismo municipio)
                     if (ultimaViaProcesada != null) {
                         gestorRutas.conectarVias(ultimaViaProcesada, via, 1.0);
                     }

@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.List;
@@ -63,10 +64,11 @@ public class ClasesApplication implements CommandLineRunner {
         log.info("----------------------------------------------------------------------------------------");
         log.info("Provincias cubiertas cargadas: {}", miCobertura.numeroProvinciasCubiertas());
 
-        /// Definimos dos puntos que sabemos que existen en el archivo
+        // Ejemplo de dos calles reales de tu archivo
         PeticionCliente origen = new PeticionCliente(10, 116, 1001000, 38010123);
         PeticionCliente destino = new PeticionCliente(10, 116, 1001000, 38010125);
-        log.info("Verificando Cobertura y Ruta....");
+
+        log.info("--- Probando Ruta Más Rápida ---");
 
         // 1. Validar cobertura con tu código original
         boolean origenOk = miCobertura.damosServicio(origen);
