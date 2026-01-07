@@ -1,0 +1,47 @@
+[
+  {
+    "from": "alice@example.com",
+    "to": "bob@example.com",
+    "since": "2023-02-01T10:00:00Z"
+  },
+  {
+    "from": "alice@example.com",
+    "to": "carol@example.com",
+    "since": "2023-02-10T09:15:00Z"
+  },
+  {
+    "from": "alice@example.com",
+    "to": "dave@example.com",
+    "since": "2023-03-05T14:30:00Z"
+  },
+  {
+    "from": "bob@example.com",
+    "to": "carol@example.com",
+    "since": "2022-12-01T08:00:00Z"
+  },
+  {
+    "from": "bob@example.com",
+    "to": "eva@example.com",
+    "since": "2023-01-20T19:45:00Z"
+  },
+  {
+    "from": "carol@example.com",
+    "to": "alice@example.com",
+    "since": "2024-03-10T11:00:00Z"
+  },
+  {
+    "from": "carol@example.com",
+    "to": "frank@example.com",
+    "since": "2024-04-02T13:25:00Z"
+  },
+  {
+    "from": "dave@example.com",
+    "to": "bob@example.com",
+    "since": "2021-08-01T09:00:00Z"
+  },
+  {
+    "from": "eva@example.com",
+    "to": "carol@example.com",
+    "since": "2020-10-01T17:00:00Z"
+  }
+]
